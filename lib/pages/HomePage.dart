@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:mini_budget/pages/AddPage.dart';
+import 'package:mini_budget/widgets/CategoriesCard.dart';
 import 'package:mini_budget/widgets/TitleBar.dart';
 import 'package:mini_budget/widgets/OverviewCard.dart';
+import 'package:mini_budget/widgets/TransactionsCard.dart';
 import 'package:mini_budget/widgets/SlideUpPageRoute.dart';
+import 'package:mini_budget/utilities/Storage.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -21,12 +25,23 @@ class _HomePageState extends State<HomePage> {
             padding: const EdgeInsets.symmetric(vertical: 36, horizontal: 24),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: const [
-                TitleBar(
-                  title: 'Mini Budget',
-                  buttonIcon: Icons.settings,
+              children: [
+                Consumer<Storage>(
+                  builder: (context, storage, child) => TitleBar(
+                    title: 'Mini Budget',
+                    buttonIcon: Icons.settings,
+                    onButtonPressed: () {
+                      // print storage transactions and categories
+                      print(storage.transactions);
+                      print(storage.categories);
+                    },
+                  ),
                 ),
-                OverviewCard(),
+                const OverviewCard(),
+                const SizedBox(height: 16),
+                const TransactionsCard(),
+                const SizedBox(height: 16),
+                const CategoriesCard(),
               ],
             ),
           ),

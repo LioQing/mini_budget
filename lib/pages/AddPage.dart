@@ -19,35 +19,46 @@ class _AddPageState extends State<AddPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 36, horizontal: 24),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                TitleBar(
-                  title: 'Add',
-                  buttonIcon: Icons.close,
-                  onButtonPressed: () => Navigator.pop(context),
-                ),
-                AddSelection(onChanged: (type) => setState(() => formType = type)),
-                const SizedBox(height: 36),
-                AnimatedCrossFade(
-                  duration: const Duration(milliseconds: 300),
-                  firstChild: InfoCard(
-                    key: ValueKey(formType),
-                    child: const AddTransactionForm(),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 36, horizontal: 24),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              TitleBar(
+                title: 'Add',
+                buttonIcon: Icons.close,
+                onButtonPressed: () => Navigator.pop(context),
+              ),
+              AddSelection(onChanged: (type) => setState(() => formType = type)),
+              const SizedBox(height: 36),
+              Expanded(
+                child: AnimatedSwitcher(
+                  duration: const Duration(milliseconds: 200),
+                  transitionBuilder: (child, animation) => SlideTransition(
+                    position: Tween<Offset>(
+                      begin: child.key == const ValueKey(AddSelectionType.transaction)
+                        ? const Offset(-1.1, 0) : const Offset(1.1, 0),
+                      end: Offset.zero,
+                    ).animate(CurvedAnimation(
+                        parent: animation,
+                        curve: Curves.easeInOut,
+                    )),
+                    child: child,
                   ),
-                  secondChild: InfoCard(
+                  child: Column(
                     key: ValueKey(formType),
-                    child: const AddCategoryForm(),
+                    children: [
+                      InfoCard(
+                        child: formType == AddSelectionType.transaction
+                            ? const AddTransactionForm()
+                            : const AddCategoryForm(),
+                      ),
+                      const Expanded(child: SizedBox()),
+                    ],
                   ),
-                  crossFadeState: formType == AddSelectionType.transaction
-                      ? CrossFadeState.showFirst
-                      : CrossFadeState.showSecond,
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),

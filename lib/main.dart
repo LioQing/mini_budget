@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mini_budget/pages/HomePage.dart';
+import 'package:provider/provider.dart';
+import 'package:mini_budget/utilities/Storage.dart';
 
-void main() => runApp(const App());
+void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  runApp(const App());
+}
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -13,13 +18,16 @@ class App extends StatelessWidget {
         .copyWith(systemNavigationBarColor: Colors.transparent)
     );
 
-    return MaterialApp(
-      title: 'Mini Budget',
-      theme: ThemeData(
-        fontFamily: 'NotoSans',
-        useMaterial3: true,
+    return ChangeNotifierProvider<Storage>(
+      create: (context) => Storage.instanced(),
+      child: MaterialApp(
+        title: 'Mini Budget',
+        theme: ThemeData(
+          fontFamily: 'NotoSans',
+          useMaterial3: true,
+        ),
+        home: const HomePage(),
       ),
-      home: const HomePage(),
     );
   }
 }

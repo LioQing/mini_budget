@@ -59,7 +59,7 @@ class _AddSelectionState extends State<AddSelection> {
       padding: const EdgeInsets.symmetric(horizontal: 24),
       child: Row(
         children: [
-          _typeButton(context, AddSelectionType.transaction, Icons.add),
+          _typeButton(context, AddSelectionType.transaction, Icons.receipt_long),
           const SizedBox(width: 8),
           _typeButton(context, AddSelectionType.category, Icons.category),
         ],
