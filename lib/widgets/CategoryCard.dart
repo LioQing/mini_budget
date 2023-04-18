@@ -10,10 +10,10 @@ class CategoryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InfoCard(
+    return const InfoCard(
       title: 'Category',
       page: CategoryPage(),
-      child: const CategoryDataTable(),
+      child: CategoryDataTable(),
     );
   }
 }

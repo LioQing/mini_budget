@@ -37,11 +37,21 @@ class _EditFormState extends State<EditForm> {
             ElevatedButton.icon(
               onPressed: () {
                 if (_formKey.currentState!.validate()) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Processing...')),
-                  );
                   _formKey.currentState!.save();
                   widget.onSave?.call();
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(
+                          widget.type == EditFormType.add
+                              ? 'Added'
+                              : 'Applied',
+                      ),
+                      backgroundColor: Theme.of(context).primaryColor,
+                    ),
+                  );
+                  if (widget.type == EditFormType.edit) {
+                    Navigator.pop(context);
+                  }
                 }
               },
               icon: Icon(

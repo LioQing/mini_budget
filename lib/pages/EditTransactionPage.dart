@@ -8,9 +8,11 @@ class EditTransactionPage extends StatelessWidget {
   const EditTransactionPage({
     super.key,
     required this.transaction,
+    this.onApply,
   });
 
   final Transaction transaction;
+  final void Function()? onApply;
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +27,7 @@ class EditTransactionPage extends StatelessWidget {
           date: transaction.date,
           note: transaction.note,
           id: transaction.id,
+          onApply: onApply,
         ),
       ],
     );

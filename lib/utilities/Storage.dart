@@ -130,17 +130,30 @@ class Storage extends ChangeNotifier {
     return save().then((value) => notifyListeners());
   }
 
-  Future<void> updateCategory(Category category) {
-    if (_categories.contains(category)) {
+  Future<void> renameCategory(Category old, Category updated, [bool updateTransactions = false]) {
+    if (old == updated) {
+      return Future.value();
+    }
+
+    if (_categories.contains(updated)) {
       return Future.error('Category already exists');
     }
 
-    if (category == Category.others) {
+    if (old == Category.others) {
       return Future.error('Others category cannot be updated');
     }
 
-    _categories.removeWhere((element) => element.name == category.name);
-    _categories.add(category);
+    _categories.removeWhere((element) => element.name == old.name);
+    _categories.add(updated);
+
+    if (updateTransactions) {
+      for (var transaction in _transactions) {
+        if (transaction.category == old.name) {
+          updateTransaction(transaction.copyWith(category: updated.name));
+        }
+      }
+    }
+
     return save().then((value) => notifyListeners());
   }
 }

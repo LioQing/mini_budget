@@ -4,7 +4,7 @@ import 'package:mini_budget/widgets/InfoCard.dart';
 import 'package:mini_budget/widgets/PageTemplate.dart';
 import 'package:mini_budget/widgets/AddSelection.dart';
 import 'package:mini_budget/widgets/TransactionForm.dart';
-import 'package:mini_budget/widgets/AddCategoryForm.dart';
+import 'package:mini_budget/widgets/CategoryForm.dart';
 
 class AddPage extends StatefulWidget {
   const AddPage({Key? key}) : super(key: key);
@@ -47,7 +47,7 @@ class _AddPageState extends State<AddPage> {
                 InfoCard(
                   child: formType == AddSelectionType.transaction
                       ? const TransactionForm(formType: EditFormType.add)
-                      : const AddCategoryForm(),
+                      : const CategoryForm(formType: EditFormType.add),
                 ),
                 const Expanded(child: SizedBox()),
               ],

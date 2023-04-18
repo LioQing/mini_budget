@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mini_budget/utilities/Category.dart';
 import 'package:mini_budget/utilities/Misc.dart';
 import 'package:mini_budget/utilities/Storage.dart';
 import 'package:provider/provider.dart';
@@ -6,7 +7,10 @@ import 'package:provider/provider.dart';
 class CategoryDataTable extends StatelessWidget {
   const CategoryDataTable({
     super.key,
+    this.onTap,
   });
+
+  final void Function(Category)? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -16,6 +20,7 @@ class CategoryDataTable extends StatelessWidget {
 
         return LayoutBuilder(
           builder: (context, constraints) => DataTable(
+            showCheckboxColumn: false,
             horizontalMargin: 0,
             columnSpacing: 10,
             columns: [
@@ -28,7 +33,7 @@ class CategoryDataTable extends StatelessWidget {
               DataColumn(
                 label: SizedBox(
                   width: (constraints.maxWidth - 20) * 0.3,
-                  child: const Text('Amount (This Month)', textAlign: TextAlign.center, softWrap: true),
+                  child: const Text('Amount (This Month)', textAlign: TextAlign.right, softWrap: true),
                 ),
               ),
               DataColumn(
@@ -42,6 +47,13 @@ class CategoryDataTable extends StatelessWidget {
               final category = entry.key;
               final amount = entry.value;
               return DataRow(
+                onSelectChanged: onTap != null
+                    ? (selected) {
+                  if (selected == true) {
+                    onTap?.call(entry.key);
+                  }
+                }
+                    : null,
                 cells: [
                   DataCell(
                     SizedBox(
@@ -58,7 +70,7 @@ class CategoryDataTable extends StatelessWidget {
                       width: (constraints.maxWidth - 20) * 0.3,
                       child: Text(
                         Misc.formatCurrency(amount),
-                        textAlign: TextAlign.center,
+                        textAlign: TextAlign.right,
                         softWrap: true,
                       ),
                     ),

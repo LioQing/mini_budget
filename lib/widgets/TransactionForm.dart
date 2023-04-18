@@ -21,6 +21,7 @@ class TransactionForm extends StatefulWidget {
     this.date,
     this.note = '',
     this.id,
+    this.onApply,
   }) : super(key: key);
 
   final EditFormType formType;
@@ -29,6 +30,7 @@ class TransactionForm extends StatefulWidget {
   final DateTime? date;
   final String note;
   final String? id;
+  final void Function()? onApply;
 
   @override
   _TransactionFormState createState() => _TransactionFormState();
@@ -76,6 +78,8 @@ class _TransactionFormState extends State<TransactionForm> {
                   note: _note,
                 ));
               }
+
+              widget.onApply?.call();
             },
             children: [
               DropdownButtonFormField(
