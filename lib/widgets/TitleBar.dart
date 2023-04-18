@@ -23,16 +23,12 @@ class TitleBar extends StatelessWidget {
               flex: 1,
               child: Align(
                 alignment: Alignment.centerLeft,
-                child: SizedBox(
-                  width: 48,
-                  height: 48,
-                  child: MaterialButton(
-                    onPressed: onButtonPressed,
-                    shape: const CircleBorder(),
-                    padding: const EdgeInsets.all(16),
-                    child: Icon(buttonIcon, size: 32),
-                  ),
-                ),
+                child: buttonIcon != null
+                  ? IconButton(
+                    icon: Icon(buttonIcon!),
+                    onPressed: () => Navigator.of(context).pop(),
+                  )
+                  : const SizedBox(),
               ),
             ),
             Text(

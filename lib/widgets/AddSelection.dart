@@ -30,11 +30,12 @@ class _AddSelectionState extends State<AddSelection> {
           setState(() => selected = type);
           widget.onChanged(type);
         },
-        style: OutlinedButton.styleFrom(
-          side: BorderSide(
-            color: buttonColor,
+        style: OutlinedButtonTheme.of(context).style!.copyWith(
+          side: MaterialStateProperty.all(
+            BorderSide(
+              color: buttonColor,
+            ),
           ),
-          padding: const EdgeInsets.symmetric(vertical: 16),
         ),
         icon: Icon(
             icon,

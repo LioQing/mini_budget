@@ -4,26 +4,26 @@ import 'dart:convert';
 // Category (selection)
 // Amount (number)
 // Date (date)
-// Remarks (text)
+// Note (text)
 
 class Transaction {
   final String id;
   final String category;
   final double amount;
   final DateTime date;
-  final String remarks;
+  final String note;
 
   Transaction({
     required this.id,
     required this.category,
     required this.amount,
     required this.date,
-    required this.remarks,
+    required this.note,
   });
 
   @override
   String toString() {
-    return 'Transaction(id: $id, category: $category, amount: $amount, date: $date, remarks: $remarks)';
+    return 'Transaction(id: $id, category: $category, amount: $amount, date: $date, note: $note)';
   }
 
   String toJson() {
@@ -32,7 +32,7 @@ class Transaction {
       'category': category,
       'amount': amount,
       'date': date.toIso8601String(),
-      'remarks': remarks,
+      'note': note,
     });
   }
 
@@ -43,7 +43,7 @@ class Transaction {
       category: data['category'],
       amount: data['amount'],
       date: DateTime.parse(data['date']),
-      remarks: data['remarks'],
+      note: data['note'],
     );
   }
 }

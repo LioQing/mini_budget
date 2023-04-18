@@ -4,6 +4,7 @@ import 'dart:convert';
 // Name (text)
 
 class Category {
+
   final String name;
   static final Category others = Category(name: 'Others');
 
